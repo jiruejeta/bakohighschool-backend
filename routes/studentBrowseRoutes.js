@@ -11,6 +11,7 @@ const {
   getFullExamQuestions,
   submitAnswer,
   submitBatchAnswers,
+  getSubjectForDownload,
 } = require('../controllers/studentQuizController');
 const { protectStudent } = require('../middleware/studentAuthMiddleware');
 
@@ -23,6 +24,7 @@ router.get('/full-chapters', getFullChapters);
 
 router.get('/quiz/chapter', getChapterQuestions);
 router.get('/quiz/full', getFullExamQuestions);
+router.get('/quiz/download-subject', getSubjectForDownload);
 router.post('/quiz/answer', submitAnswer);
 router.post('/quiz/submit-batch', submitBatchAnswers);
 

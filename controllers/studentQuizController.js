@@ -199,4 +199,49 @@ const submitBatchAnswers = async (req, res, next) => {
   }
 };
 
-module.exports = { getChapterQuestions, getFullExamQuestions, submitAnswer, submitBatchAnswers };
+// @desc    Get ALL published questions for a subject (all grades/chapters combined) — used for offline download
+// @route   GET /api/student/quiz/download-subject?subject=
+// @access  Private (student)
+const getSubjectForDownload = async (req, res, next) => {
+  try {
+    const { subject } = req.query;
+
+    if (!subject) {
+      return res.status(400).json({ success: false, message: 'subject is required' });
+    }
+
+    const questions = await Question.find({
+      subject,
+      status: 'published',
+    })
+      .populate('chapter', 'title')
+      .sort({ grade: 1, questionNumber: 1 });
+
+    const data = questions.map((q) => ({
+      _id: q._id,
+      grade: q.grade,
+      chapter: q.chapter,
+      questionNumber: q.questionNumber,
+      questionText: q.questionText,
+      questionImage: q.questionImage,
+      choices: q.choices,
+      correctAnswer: q.correctAnswer,
+      explanation: q.explanation,
+      explanationImage: q.explanationImage,
+      explanationVideoUrl: q.explanationVideoUrl,
+      explanationVideoFile: q.explanationVideoFile,
+    }));
+
+    res.status(200).json({ success: true, count: data.length, data });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  getChapterQuestions,
+  getFullExamQuestions,
+  submitAnswer,
+  submitBatchAnswers,
+  getSubjectForDownload,
+};
