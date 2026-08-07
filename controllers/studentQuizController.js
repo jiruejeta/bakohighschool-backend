@@ -202,6 +202,9 @@ const submitBatchAnswers = async (req, res, next) => {
 // @desc    Get ALL published questions for a subject (all grades/chapters combined) — used for offline download
 // @route   GET /api/student/quiz/download-subject?subject=
 // @access  Private (student)
+// @desc    Get ALL published questions for a subject (all grades/chapters combined) — used for offline download
+// @route   GET /api/student/quiz/download-subject?subject=
+// @access  Private (student)
 const getSubjectForDownload = async (req, res, next) => {
   try {
     const { subject } = req.query;
@@ -215,12 +218,14 @@ const getSubjectForDownload = async (req, res, next) => {
       status: 'published',
     })
       .populate('chapter', 'title')
+      .populate('nationalExam', 'year title')
       .sort({ grade: 1, questionNumber: 1 });
 
     const data = questions.map((q) => ({
       _id: q._id,
       grade: q.grade,
       chapter: q.chapter,
+      nationalExam: q.nationalExam,
       questionNumber: q.questionNumber,
       questionText: q.questionText,
       questionImage: q.questionImage,
