@@ -34,6 +34,7 @@ const createQuestion = async (req, res, next) => {
       nationalExam,
       questionNumber,
       questionText,
+      passage,
       choices,
       correctAnswer,
       explanation,
@@ -69,6 +70,7 @@ const createQuestion = async (req, res, next) => {
       nationalExam: nationalExam || null,
       questionNumber,
       questionText,
+      passage,
       questionImage: questionImage || undefined,
       choices,
       correctAnswer,
@@ -181,6 +183,7 @@ const updateQuestion = async (req, res, next) => {
       nationalExam,
       questionNumber,
       questionText,
+      passage,
       choices,
       correctAnswer,
       explanation,
@@ -246,6 +249,7 @@ const updateQuestion = async (req, res, next) => {
     if (nationalExam !== undefined) question.nationalExam = nationalExam || null;
     if (questionNumber !== undefined) question.questionNumber = questionNumber;
     if (questionText !== undefined) question.questionText = questionText;
+    if (passage !== undefined) question.passage = passage;
     if (choices !== undefined) question.choices = choices;
     if (correctAnswer !== undefined) question.correctAnswer = correctAnswer;
     if (explanation !== undefined) question.explanation = explanation;
@@ -352,6 +356,7 @@ const bulkCreateQuestions = async (req, res, next) => {
           nationalExam: nationalExam || null,
           questionNumber: q.questionNumber,
           questionText: q.questionText,
+          passage: q.passage || '',
           choices: q.choices,
           correctAnswer: q.correctAnswer,
           explanation: q.explanation || '',

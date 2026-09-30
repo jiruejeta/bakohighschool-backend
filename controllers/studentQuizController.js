@@ -9,6 +9,7 @@ const sanitizeQuestion = (q, attemptMap) => {
     _id: q._id,
     questionNumber: q.questionNumber,
     questionText: q.questionText,
+    passage: q.passage,
     questionImage: q.questionImage,
     choices: q.choices,
     grade: q.grade,
@@ -84,6 +85,7 @@ const getFullExamQuestions = async (req, res, next) => {
       _id: q._id,
       questionNumber: q.questionNumber,
       questionText: q.questionText,
+      passage: q.passage,
       questionImage: q.questionImage,
       choices: q.choices,
       grade: q.grade,
@@ -127,6 +129,7 @@ const submitAnswer = async (req, res, next) => {
         selectedAnswer,
         isCorrect,
         correctAnswer: question.correctAnswer,
+        passage: question.passage,
         explanation: question.explanation,
         explanationImage: question.explanationImage,
         explanationVideoUrl: question.explanationVideoUrl,
@@ -174,6 +177,7 @@ const submitBatchAnswers = async (req, res, next) => {
         questionId: question._id,
         questionNumber: question.questionNumber,
         questionText: question.questionText,
+        passage: question.passage,
         yourAnswer: ans.selectedAnswer,
         correctAnswer: question.correctAnswer,
         isCorrect,
@@ -202,9 +206,6 @@ const submitBatchAnswers = async (req, res, next) => {
 // @desc    Get ALL published questions for a subject (all grades/chapters combined) — used for offline download
 // @route   GET /api/student/quiz/download-subject?subject=
 // @access  Private (student)
-// @desc    Get ALL published questions for a subject (all grades/chapters combined) — used for offline download
-// @route   GET /api/student/quiz/download-subject?subject=
-// @access  Private (student)
 const getSubjectForDownload = async (req, res, next) => {
   try {
     const { subject } = req.query;
@@ -228,6 +229,7 @@ const getSubjectForDownload = async (req, res, next) => {
       nationalExam: q.nationalExam,
       questionNumber: q.questionNumber,
       questionText: q.questionText,
+      passage: q.passage,
       questionImage: q.questionImage,
       choices: q.choices,
       correctAnswer: q.correctAnswer,

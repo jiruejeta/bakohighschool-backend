@@ -42,6 +42,11 @@ const questionSchema = new mongoose.Schema(
       required: [true, 'Question text is required'],
       trim: true,
     },
+    passage: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     questionImage: {
       type: cloudinaryFileSchema,
       default: () => ({}),

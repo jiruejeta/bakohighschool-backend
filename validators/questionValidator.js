@@ -16,6 +16,7 @@ const questionValidator = [
     .notEmpty().withMessage('Question number is required')
     .isInt({ min: 1 }).withMessage('Question number must be a positive number'),
   body('questionText').trim().notEmpty().withMessage('Question text is required'),
+  body('passage').optional().trim(),
   body('choices.A').trim().notEmpty().withMessage('Choice A is required'),
   body('choices.B').trim().notEmpty().withMessage('Choice B is required'),
   body('choices.C').trim().notEmpty().withMessage('Choice C is required'),
